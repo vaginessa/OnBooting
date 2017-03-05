@@ -7,11 +7,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -33,6 +37,10 @@ public class AlterEditor extends EditText {
     private int codeColor;
     private int deviderColor;
     private int lineNumberColor;
+    private boolean modified = true;
+    private boolean realModified = false;
+    private Handler updater = new Handler();
+
 
     public AlterEditor(Context context) {
         super(context);
@@ -73,55 +81,124 @@ public class AlterEditor extends EditText {
             setTextColor(codeColor);
             setCursorVisible(true);
             setHorizontallyScrolling(true);
-            SyntaxColorSet.colorKeywords = ResourcesCompat.getColor(getResources(), R.color.colorCodeKeywords, null);
-            SyntaxColorSet.colorStructures = ResourcesCompat.getColor(getResources(), R.color.colorCodeStructures, null);
-            SyntaxColorSet.colorVariables = ResourcesCompat.getColor(getResources(), R.color.colorCodeVariables, null);
+            SyntaxColorSet.colorKeyword = ResourcesCompat.getColor(getResources(), R.color.colorCodeKeyword, null);
+            SyntaxColorSet.colorString = ResourcesCompat.getColor(getResources(), R.color.colorCodeString, null);
+            SyntaxColorSet.colorVariable = ResourcesCompat.getColor(getResources(), R.color.colorCodeVariable, null);
+            SyntaxColorSet.colorComment = ResourcesCompat.getColor(getResources(), R.color.colorCodeComment, null);
+            SyntaxColorSet.colorNumber = ResourcesCompat.getColor(getResources(), R.color.colorCodeNumber, null);
+            addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    updater.removeCallbacks(HighlightUpdater);
+                    if (modified || !realModified) {
+                        updater.postDelayed(HighlightUpdater, 1000);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
         }
     }
 
     public StringBuilder content() {
-        return new StringBuilder(getText().toString());
+        Editable editable = new SpannableStringBuilder(getText());
+        editable.clearSpans();
+        return new StringBuilder(editable.toString());
     }
 
     private static class SyntaxPattern {
-        static Pattern KEYWORDS = Pattern.compile("(^[\\t ]*.*(\\[|\\[\\[|acpid|adjtimex|ar|arp|arping|ash|awk|basename|blockdev|brctl|bunzip2|bzcat|bzip2|cal|cat|chgrp|chmod|chown|chroot|chvt|clear|cmp|cp|cpio|cttyhack|cut|date|dc|dd|deallocvt|depmod|devmem|df|diff|dirname|dmesg|dnsdomainname|dos2unix|du|dumpkmap|dumpleases|echo|egrep|env|expand|expr|false|fgrep|find|fold|free|freeramdisk|fstrim|ftpget|ftpput|getopt|getty|grep|groups|gunzip|gzip|halt|head|hexdump|hostid|hostname|httpd|hwclock|id|ifconfig|init|insmod|ionice|ip|ipcalc|kill|killall|klogd|last|less|ln|loadfont|loadkmap|logger|login|logname|logread|losetup|ls|lsmod|lzcat|lzma|lzop|lzopcat|md5sum|mdev|microcom|mkdir|mkfifo|mknod|mkswap|mktemp|modinfo|modprobe|more|mount|mt|mv|nameif|nc|netstat|nslookup|od|openvt|patch|pidof|ping|ping6|pivot_root|poweroff|printf|ps|pwd|rdate|readlink|realpath|reboot|renice|reset|rev|rm|rmdir|rmmod|route|rpm|rpm2cpio|run-parts|sed|seq|setkeycodes|setsid|sh|sha1sum|sha256sum|sha512sum|sleep|sort|start-stop-daemon|stat|strings|stty|swapoff|swapon|switch_root|sync|sysctl|syslogd|tac|tail|tar|taskset|tee|telnet|test|tftp|time|timeout|top|touch|tr|traceroute|traceroute6|true|tty|udhcpc|udhcpd|umount|uname|uncompress|unexpand|uniq|unix2dos|unlzma|unlzop|unxz|unzip|uptime|usleep|uudecode|uuencode|vconfig|vi|watch|watchdog|wc|wget|which|who|whoami|xargs|xz|xzcat|yes|zcat)[\\t ]{1})", Pattern.MULTILINE);
-        static Pattern STRUCTURES = Pattern.compile("(([\" \']{1}(.*)[\" \']{1}))", Pattern.MULTILINE);
-        static Pattern VARIABLES = Pattern.compile("^[\\t ]*.*([a-z][A-Z].*)*(?==)", Pattern.MULTILINE);
+        static Pattern COMMENT = Pattern.compile("#[^\\n]*");
+        static Pattern KEYWORD = Pattern.compile("\\b(if|fi|then|else|for|in|do|while|done|echo|su|cat|grep|sed|awk|cut|md5sum|readlink|cd|mv|cp|rm|mkdir|find|read|busybox|stop|start)\\b");
+        static Pattern STRING = Pattern.compile("\".*?\"", Pattern.MULTILINE);
+        static Pattern VARIABLE = Pattern.compile("\\$[A-Za-z0-9_\\.]*");
+        static Pattern NUMBER = Pattern.compile("\\b[0-9]*\\b");
     }
 
     private static class SyntaxColorSet {
-        static int colorKeywords;
-        static int colorStructures;
-        static int colorVariables;
+        static int colorKeyword;
+        static int colorString;
+        static int colorVariable;
+        static int colorComment;
+        static int colorNumber;
     }
 
-    @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        super.onTextChanged(text, start, lengthBefore, lengthAfter);
-        Editable e = getText();
-        //Log.i(AlterEditor.class.getSimpleName(), "text=" + text + " start=" + start + "   " + lengthAfter + " " + lengthBefore);
-        for (Matcher m = SyntaxPattern.KEYWORDS.matcher(e); m.find(); ) {
-            e.setSpan(
-                    new ForegroundColorSpan(SyntaxColorSet.colorKeywords),
-                    m.start(),
-                    m.end(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    private void clearSpans(Editable e) {
+        // remove foreground color spans
+        {
+            ForegroundColorSpan spans[] = e.getSpans(
+                    0,
+                    e.length(),
+                    ForegroundColorSpan.class);
+
+            for (int i = spans.length; i-- > 0; ) {
+                e.removeSpan(spans[i]);
+            }
         }
-        for (Matcher m = SyntaxPattern.STRUCTURES.matcher(e); m.find(); ) {
-            e.setSpan(
-                    new ForegroundColorSpan(SyntaxColorSet.colorStructures),
-                    m.start(),
-                    m.end(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        for (Matcher m = SyntaxPattern.VARIABLES.matcher(e); m.find(); ) {
-            e.setSpan(
-                    new ForegroundColorSpan(SyntaxColorSet.colorVariables),
-                    m.start(),
-                    m.end(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // remove background color spans
+        {
+            BackgroundColorSpan spans[] = e.getSpans(
+                    0,
+                    e.length(),
+                    BackgroundColorSpan.class);
+
+            for (int i = spans.length; i-- > 0; ) {
+                e.removeSpan(spans[i]);
+            }
         }
     }
+
+    private Runnable HighlightUpdater = new Runnable() {
+        @Override
+        public void run() {
+            modified = false;
+            realModified = true;
+            Editable spans = getText();
+            clearSpans(spans);
+            for (Matcher m = SyntaxPattern.KEYWORD.matcher(spans); m.find(); ) {
+                spans.setSpan(
+                        new ForegroundColorSpan(SyntaxColorSet.colorKeyword),
+                        m.start(),
+                        m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            for (Matcher m = SyntaxPattern.STRING.matcher(spans); m.find(); ) {
+                spans.setSpan(
+                        new ForegroundColorSpan(SyntaxColorSet.colorString),
+                        m.start(),
+                        m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            for (Matcher m = SyntaxPattern.VARIABLE.matcher(spans); m.find(); ) {
+                spans.setSpan(
+                        new ForegroundColorSpan(SyntaxColorSet.colorVariable),
+                        m.start(),
+                        m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            for (Matcher m = SyntaxPattern.COMMENT.matcher(spans); m.find(); ) {
+                spans.setSpan(
+                        new ForegroundColorSpan(SyntaxColorSet.colorComment),
+                        m.start(),
+                        m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            for (Matcher m = SyntaxPattern.NUMBER.matcher(spans); m.find(); ) {
+                spans.setSpan(
+                        new ForegroundColorSpan(SyntaxColorSet.colorNumber),
+                        m.start(),
+                        m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            modified = true;
+        }
+    };
 
     private String appendWhiteSpaces(int lineNumber, int lineCount) {
         StringBuilder lineText = new StringBuilder();

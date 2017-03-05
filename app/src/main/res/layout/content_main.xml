@@ -10,15 +10,14 @@
     tools:showIn="@layout/activity_main">
 
     <crixec.commom.widget.AlterEditor xmlns:editor="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorCodeBackground"
         android:textCursorDrawable="@drawable/editor_cursor"
         editor:basePadding="2dp"
         editor:codeColor="@color/codeColor"
-        android:id="@+id/editor"
         editor:deviderColor="@color/colorDevider"
         editor:lineNumberColor="@color/colorLineNumber" />
 
-    <requestFocus />
 </android.support.v4.widget.NestedScrollView>
