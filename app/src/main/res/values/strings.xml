@@ -1,0 +1,21 @@
+<resources>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="app_name">On Booting</string>
+    <string name="new_script">New Script</string>
+    <string name="script_name">Script name</string>
+    <string name="save">Save</string>
+    <string name="run">Run</string>
+    <string name="confirm_save">Save script content?</string>
+    <string name="save_successful">Save successful</string>
+    <string name="auto_run">Auto run on booting</string>
+    <string name="delete">Delete</string>
+    <string name="delete_successful">Delete successful</string>
+    <string name="close">Close</string>
+    <string name="run_script_successful">Run script successful</string>
+    <string name="run_script_failed">Run script failed</string>
+    <string name="copy">Copy</string>
+    <string name="result_code">Result Code</string>
+    <string name="as_root">As a root user</string>
+    <string name="running_script">Running script : %s</string>
+</resources>

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">启动时</string>
+    <string name="new_script">新脚本</string>
+    <string name="script_name">脚本名称</string>
+    <string name="save">保存</string>
+    <string name="run">运行</string>
+    <string name="confirm_save">保存脚本内容?</string>
+    <string name="save_successful">保存成功</string>
+    <string name="auto_run">开机自动运行</string>
+    <string name="delete">删除</string>
+    <string name="delete_successful">删除成功</string>
+    <string name="close">关闭</string>
+    <string name="run_script_successful">脚本运行成功</string>
+    <string name="run_script_failed">脚本运行失败</string>
+    <string name="copy">复制</string>
+    <string name="result_code">返回值</string>
+    <string name="as_root">作为ROOT用户执行</string>
+    <string name="running_script">运行脚本：%s</string>
+</resources>

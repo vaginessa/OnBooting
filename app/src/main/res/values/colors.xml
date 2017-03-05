@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#0288D1</color>
+    <color name="colorLineNumber">#424242</color>
+    <color name="colorDevider">#263238</color>
+    <color name="colorCursor">@color/colorPrimary</color>
+    <color name="codeColor">#212121</color>
+    <color name="colorCodeBackground">@android:color/transparent</color>
+    <color name="colorCodeStructures">#0D47A1</color>
+    <color name="colorCodeVariables">#b71c1c</color>
+    <color name="colorCodeKeywords">#F4511E</color>
+    <color name="Terminal.Stdout">#009688</color>
+    <color name="Terminal.Stderr">#ee5c61</color>
+    <color name="Terminal.Command">#607D8B</color>
+    <color name="Terminal.ResultCode">#4CAF50</color>
+</resources>
