@@ -110,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            if (!isSaved()) {
+                showSaveDialog(current);
+                return;
+            }
             super.onBackPressed();
         }
     }
@@ -151,29 +155,33 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
     }
 
     @Override
-    public void onScriptItemClick(final int position) {
+    public void onScriptItemClick(int position) {
         if (!isSaved()) {
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.confirm_save)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            saveScriptContent();
-                            switchScript(ScriptManager.getBeans().get(position));
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switchScript(ScriptManager.getBeans().get(position));
-                        }
-                    })
-                    .show();
+            showSaveDialog(position);
         } else {
             switchScript(ScriptManager.getBeans().get(position));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    private void showSaveDialog(final int position) {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.confirm_save)
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveScriptContent();
+                        switchScript(ScriptManager.getBeans().get(position));
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switchScript(ScriptManager.getBeans().get(position));
+                    }
+                })
+                .show();
     }
 
     @Override
