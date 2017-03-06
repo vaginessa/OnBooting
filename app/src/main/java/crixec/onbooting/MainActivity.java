@@ -1,6 +1,7 @@
 package crixec.onbooting;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -135,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
             saveScriptContent();
             new RunScriptTask(this, currentScript).execute();
             return true;
+        } else if (id == R.id.action_download_scripts) {
+            Intent intent = new Intent(this, DownloadScriptActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

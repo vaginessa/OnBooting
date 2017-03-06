@@ -1,0 +1,6 @@
+#!/system/bin/sh
+if [ `id -u`x != 0x ];then
+ echo "Please run as root,exit!"
+ exit 1
+fi
+setenforce 1

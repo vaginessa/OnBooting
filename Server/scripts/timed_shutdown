@@ -1,0 +1,64 @@
+#!/system/bin/sh
+
+#关机时间24小时制
+# 不使用准确时间设置方法
+SHUTDOWN_TIME="11:13"
+# 准确时间设置方法
+#SHUTDOWN_TIME="2017-03-06 09:51"
+#是否准确到年月日 true 和 false
+USE_ACCURATE=false
+#检查间隔，多久判断一次时间 单位秒
+INTERVAL_TIME=5
+
+TIME_FORMAT="%R"
+if [ "${USE_ACCURATE}"x == falsex ];then
+ TIME_FORMAT="%Y-%m-%d %R"
+ SHUTDOWN_TIME="`date +%Y-%m-%d` ${SHUTDOWN_TIME}"
+fi
+LOG_FILE="/data/local/TimedShutdown.log"
+
+function ui_print(){
+echo "[TimedShutdown] "$@"" >> ${LOG_FILE}
+echo "$@"
+}
+function getTime(){
+echo -n "`date "+$TIME_FORMAT"`"
+}
+function getTimeStamp(){
+echo -n "`date -D "$TIME_FORMAT" -d "$1" +%s`"
+}
+function readyShutdown(){
+ui_print "Time Format : $TIME_FORMAT"
+ui_print "Shutdown Script Running..."
+CUR_TIME=`getTime`
+while [ "${CUR_TIME}"x != "${SHUTDOWN_TIME}"x ];do
+ ui_print "Judging time : ${CUR_TIME} != ${SHUTDOWN_TIME}"
+ sleep ${INTERVAL_TIME}
+ CUR_TIME=`getTime`
+done
+ui_print "Shutdown system at : `getTime`"
+reboot -p
+}
+function _exit(){
+ui_print "Script stop at : `getTime`"
+exit $1
+}
+ui_print "Log file at : ${LOG_FILE}"
+>$LOG_FILE
+ui_print "Script start at : `getTime`"
+if [ `id -u`x != 0x ];then
+ ui_print "Please run as root,exit!"
+ _exit 1
+fi
+ui_print "Shutdown Time : ${SHUTDOWN_TIME}"
+s_ts=`getTimeStamp "${SHUTDOWN_TIME}"`
+c_ts=`getTimeStamp "$(getTime)"`
+ui_print "Time stamp : $c_ts $s_ts"
+
+if [ "$s_ts" -le "$c_ts" ];then
+ ui_print "Shutdown time unreachable!"
+ _exit 1
+fi
+readyShutdown &
+ui_print "Running in background..."
+_exit 0

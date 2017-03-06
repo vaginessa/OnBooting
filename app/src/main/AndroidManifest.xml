@@ -19,6 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -27,13 +28,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
+
         <service android:name=".AutoRunService" />
+
+        <activity
+            android:name=".DownloadScriptActivity"
+            android:label="@string/download_scripts"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
     </application>
 
 </manifest>

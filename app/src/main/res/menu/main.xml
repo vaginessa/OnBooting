@@ -11,4 +11,16 @@
         android:icon="@drawable/ic_run"
         android:title="@string/run"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_download_scripts"
+        android:title="@string/download_scripts"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_donate"
+        android:title="@string/donate"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about"
+        android:title="@string/about"
+        app:showAsAction="never" />
 </menu>

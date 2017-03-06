@@ -16,4 +16,8 @@
     <string name="result_code">返回值</string>
     <string name="as_root">作为ROOT用户执行</string>
     <string name="running_script">运行脚本：%s</string>
+    <string name="download_scripts">下载脚本</string>
+    <string name="about">关于</string>
+    <string name="donate">捐赠</string>
+    <string name="loading_script_list">Loading script list...</string>
 </resources>

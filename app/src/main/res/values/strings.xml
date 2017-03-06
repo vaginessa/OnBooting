@@ -18,4 +18,8 @@
     <string name="result_code">Result Code</string>
     <string name="as_root">As a root user</string>
     <string name="running_script">Running script : %s</string>
+    <string name="download_scripts">Download Scripts</string>
+    <string name="about">About</string>
+    <string name="donate">Doante</string>
+    <string name="loading_script_list">Loading script list...</string>
 </resources>
