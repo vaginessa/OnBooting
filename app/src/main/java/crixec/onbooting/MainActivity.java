@@ -22,6 +22,14 @@ import android.view.View;
 import java.util.Collections;
 
 import crixec.commom.widget.AlterEditor;
+import crixec.onbooting.download.DownloadScriptActivity;
+import crixec.onbooting.script.OnScriptItemClickListener;
+import crixec.onbooting.script.RunScriptTask;
+import crixec.onbooting.script.ScriptAdapter;
+import crixec.onbooting.script.ScriptBean;
+import crixec.onbooting.script.ScriptDialog;
+import crixec.onbooting.script.ScriptManager;
+import crixec.onbooting.script.ScriptSortComparator;
 
 public class MainActivity extends AppCompatActivity implements OnScriptItemClickListener, ScriptDialog.IOnScriptChanged {
 
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
         initViews();
         loadScripts();
         refreshAdapter();
+        currentScript = ScriptManager.getBeans().get(0);
+        switchScript(currentScript);
     }
 
     private void initViews() {
@@ -146,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
     }
 
     private void Tip(int res) {
-        Tip(getText(res));
+        Tip(getString(res));
     }
 
     private void Tip(CharSequence text) {

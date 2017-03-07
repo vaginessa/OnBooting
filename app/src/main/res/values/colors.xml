@@ -17,4 +17,6 @@
     <color name="Terminal.Stderr">#ee5c61</color>
     <color name="Terminal.Command">#607D8B</color>
     <color name="Terminal.ResultCode">#4CAF50</color>
+    <color name="Script.Name">#3A4457</color>
+    <color name="Script.Description">#B8B6C3</color>
 </resources>

@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 /**
  * Created by crixec on 17-3-5.

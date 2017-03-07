@@ -1,32 +1,33 @@
-package crixec.onbooting;
+package crixec.onbooting.download.webscript;
 
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import crixec.onbooting.R;
 
 /**
  * Created by crixec on 17-2-11.
  */
 
-public class ScriptViewHolder extends RecyclerView.ViewHolder {
+public class WebScriptViewHolder extends RecyclerView.ViewHolder {
     public View itemVew;
-    private AppCompatImageView bootableFlag;
+    private AppCompatTextView description;
     private AppCompatTextView scriptName;
 
-    public ScriptViewHolder(View itemView) {
+    public WebScriptViewHolder(View itemView) {
         super(itemView);
         this.itemVew = itemView;
-        bootableFlag = (AppCompatImageView) itemView.findViewById(R.id.script_bootable_flag);
+        description = (AppCompatTextView) itemView.findViewById(R.id.script_description);
         scriptName = (AppCompatTextView) itemView.findViewById(R.id.script_name);
     }
 
-    public AppCompatImageView getBootableFlag() {
-        return bootableFlag;
+    public CharSequence getDescription() {
+        return description.getText();
     }
 
-    public void setBootableFlag(int bootableFlag) {
-        this.bootableFlag.setImageResource(bootableFlag);
+    public void setDescription(CharSequence description) {
+        this.description.setText(description);
     }
 
     public CharSequence getScriptName() {

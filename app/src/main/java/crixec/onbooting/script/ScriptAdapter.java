@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+
+import crixec.onbooting.R;
 
 /**
  * Created by crixec on 17-2-11.

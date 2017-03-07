@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.util;
 
 import android.text.TextUtils;
 

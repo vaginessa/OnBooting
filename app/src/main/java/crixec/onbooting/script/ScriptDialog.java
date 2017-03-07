@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -11,6 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+
+import crixec.onbooting.R;
 
 /**
  * Created by crixec on 17-3-4.

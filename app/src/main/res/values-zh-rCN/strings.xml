@@ -19,5 +19,16 @@
     <string name="download_scripts">下载脚本</string>
     <string name="about">关于</string>
     <string name="donate">捐赠</string>
-    <string name="loading_script_list">Loading script list...</string>
+    <string name="loading_script_list">加载脚本列表。。。</string>
+    <string name="author">作者</string>
+    <string name="description">描述</string>
+    <string name="version_code">版本号</string>
+    <string name="version_name">版本名</string>
+    <string name="bootable">开机自启</string>
+    <string name="rootable">需要ROOT</string>
+    <string name="download_url">下载链接</string>
+    <string name="download">下载</string>
+    <string name="copied">已复制</string>
+    <string name="downloading">下载中。。。</string>
+    <string name="download_successful">下载成功</string>
 </resources>

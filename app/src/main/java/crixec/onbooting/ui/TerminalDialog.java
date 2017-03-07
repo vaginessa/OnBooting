@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+
+import crixec.onbooting.R;
+import crixec.onbooting.util.ShellUtils;
 
 /**
  * Created by crixec on 16-8-20.

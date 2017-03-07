@@ -1,9 +1,13 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
+
+import crixec.onbooting.R;
+import crixec.onbooting.util.ShellUtils;
+import crixec.onbooting.ui.TerminalDialog;
 
 /**
  * Created by crixec on 17-3-5.

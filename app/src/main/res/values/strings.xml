@@ -20,6 +20,17 @@
     <string name="running_script">Running script : %s</string>
     <string name="download_scripts">Download Scripts</string>
     <string name="about">About</string>
-    <string name="donate">Doante</string>
-    <string name="loading_script_list">Loading script list...</string>
+    <string name="donate">Donate</string>
+    <string name="loading_script_list">Loading script list…</string>
+    <string name="author">Author</string>
+    <string name="description">Description</string>
+    <string name="version_name">Version Name</string>
+    <string name="version_code">Version Code</string>
+    <string name="bootable">Bootable</string>
+    <string name="rootable">Rootable</string>
+    <string name="download_url">Download Url</string>
+    <string name="download">Download</string>
+    <string name="copied">Copied</string>
+    <string name="downloading">Downloading…</string>
+    <string name="download_successful">Download Successful</string>
 </resources>

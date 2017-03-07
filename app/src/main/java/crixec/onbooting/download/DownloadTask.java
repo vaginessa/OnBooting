@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.download;
 
 import android.os.AsyncTask;
 
@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import crixec.onbooting.util.Utils;
 
 /**
  * Created by crixec on 17-3-6.
@@ -44,6 +46,7 @@ public class DownloadTask extends AsyncTask<String, Void, File> {
             String line = reader.readLine();
             while (line != null) {
                 writer.write(line);
+                writer.write("\n");
                 writer.flush();
                 line = reader.readLine();
             }

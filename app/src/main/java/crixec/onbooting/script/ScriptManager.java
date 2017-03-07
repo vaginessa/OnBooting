@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 import android.content.Context;
 import android.util.Xml;
@@ -20,19 +20,19 @@ import java.util.List;
  * Created by crixec on 17-3-3.
  */
 
-class ScriptManager {
+public class ScriptManager {
     private static String STORE_FILE;
     private static Context sContext;
     private static List<ScriptBean> beans = new ArrayList<>();
 
-    static void init(Context context) {
+    public static void init(Context context) {
         if (STORE_FILE == null) {
             STORE_FILE = new File(context.getFilesDir(), "scripts.xml").getPath();
             sContext = context;
         }
     }
 
-    static List<ScriptBean> readAll() {
+    public static List<ScriptBean> readAll() {
         beans.clear();
         try {
             FileReader reader = new FileReader(STORE_FILE);
@@ -62,7 +62,7 @@ class ScriptManager {
         return beans;
     }
 
-    static void changeBean(ScriptBean oldBean, ScriptBean newBean) {
+    public static void changeBean(ScriptBean oldBean, ScriptBean newBean) {
         if (oldBean != null && newBean != null && oldBean != newBean && beans.contains(oldBean)) {
             int index = beans.indexOf(oldBean);
             beans.remove(index);
@@ -70,7 +70,7 @@ class ScriptManager {
         }
     }
 
-    static String randomLocalShell() {
+    public static String randomLocalShell() {
         File file = new File(sContext.getFilesDir(), System.currentTimeMillis() + ".sh");
         try {
             FileWriter fileWriter = new FileWriter(file, false);
@@ -83,19 +83,19 @@ class ScriptManager {
         return file.getPath();
     }
 
-    static void addScript(ScriptBean scriptBean) {
+    public static void addScript(ScriptBean scriptBean) {
         if (scriptBean != null && !beans.contains(scriptBean)) {
             beans.add(scriptBean);
         }
     }
 
-    static boolean removeScript(int index) {
+    public static boolean removeScript(int index) {
         if (index < 0) return false;
         beans.remove(index);
         return true;
     }
 
-    static boolean removeScript(ScriptBean scriptBean) {
+    public static boolean removeScript(ScriptBean scriptBean) {
         if (scriptBean != null && beans.contains(scriptBean)) {
             beans.remove(scriptBean);
             return new File(scriptBean.getRealPath()).delete();
@@ -103,7 +103,7 @@ class ScriptManager {
         return false;
     }
 
-    static StringBuilder readScriptContent(ScriptBean bean) {
+    public static StringBuilder readScriptContent(ScriptBean bean) {
         StringBuilder content = new StringBuilder();
         File file = new File(bean.getRealPath());
         if (file.exists()) {
@@ -122,7 +122,7 @@ class ScriptManager {
         return content;
     }
 
-    static List<ScriptBean> getBootableScripts() {
+    public static List<ScriptBean> getBootableScripts() {
         List<ScriptBean> bootables = new ArrayList<>();
         if (beans.size() != 0) {
             for (ScriptBean bean : beans) {
@@ -132,7 +132,7 @@ class ScriptManager {
         return bootables;
     }
 
-    static void writeScriptContent(ScriptBean bean, StringBuilder content) {
+    public static void writeScriptContent(ScriptBean bean, StringBuilder content) {
         try {
             File file = new File(bean.getRealPath());
             FileWriter fw = new FileWriter(file, false);
@@ -147,14 +147,14 @@ class ScriptManager {
         }
     }
 
-    static List<ScriptBean> getBeans() {
+    public static List<ScriptBean> getBeans() {
         if (beans.size() == 0) {
             beans.add(new ScriptBean("Untitled Script", false, randomLocalShell(), false));
         }
         return beans;
     }
 
-    static void saveAll() {
+    public static void saveAll() {
         XmlSerializer serializer = Xml.newSerializer();
         try {
             FileWriter writer = new FileWriter(STORE_FILE, false);

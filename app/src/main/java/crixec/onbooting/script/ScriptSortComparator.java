@@ -1,4 +1,4 @@
-package crixec.onbooting;
+package crixec.onbooting.script;
 
 import java.util.Comparator;
 

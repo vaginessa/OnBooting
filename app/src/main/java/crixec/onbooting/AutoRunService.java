@@ -6,8 +6,11 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import crixec.onbooting.script.ScriptBean;
+import crixec.onbooting.script.ScriptManager;
+import crixec.onbooting.util.ShellUtils;
 
 public class AutoRunService extends Service {
     public AutoRunService() {
