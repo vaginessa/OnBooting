@@ -31,4 +31,8 @@
     <string name="copied">已复制</string>
     <string name="downloading">下载中。。。</string>
     <string name="download_successful">下载成功</string>
+    <string name="about_content">本软件由Crixec开发\n已开源到https://github.com/Crixec/OnBooting\n如果你有好的脚本，可以发到我的邮箱\n79236107@qq.com\ncrixec@gmail.com</string>
+    <string name="donate_content">捐赠无论多少，都是给作者最好的鼓励（多多益善）</string>
+    <string name="wechat">微信</string>
+    <string name="alipay">支付宝</string>
 </resources>

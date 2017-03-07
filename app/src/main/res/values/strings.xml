@@ -33,4 +33,8 @@
     <string name="copied">Copied</string>
     <string name="downloading">Downloading…</string>
     <string name="download_successful">Download Successful</string>
+    <string name="about_content">The app developed by Crixec, has been open to https://github.com/Crixec/OnBooting\nIf you have a good script, you can send to my mailbox\n79236107@qq.com\ncrixec@gmail.com</string>
+    <string name="donate_content">Donations no matter how much, are the best encouragement to the author (the more the better)</string>
+    <string name="wechat">Wechat</string>
+    <string name="alipay">Alipay</string>
 </resources>

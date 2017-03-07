@@ -1,5 +1,7 @@
 package crixec.onbooting;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -150,6 +152,26 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
             Intent intent = new Intent(this, DownloadScriptActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        } else if (id == R.id.action_about) {
+            new AlertDialog.Builder(this).setTitle(R.string.about)
+                    .setMessage(R.string.about_content)
+                    .setCancelable(true)
+                    .show();
+        } else if (id == R.id.action_donate) {
+            DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String account = "13617071775";
+                    ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setText(account);
+                    Tip(R.string.copied);
+                }
+            };
+            new AlertDialog.Builder(this).setTitle(R.string.donate)
+                    .setMessage(R.string.donate_content)
+                    .setCancelable(true)
+                    .setNeutralButton(R.string.wechat, onClickListener)
+                    .setPositiveButton(R.string.alipay, onClickListener)
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);
@@ -196,12 +218,20 @@ public class MainActivity extends AppCompatActivity implements OnScriptItemClick
                         switchScript(ScriptManager.getBeans().get(position));
                     }
                 })
+                .setNegativeButton(android.R.string.cancel, null)
+                .setCancelable(false)
                 .show();
     }
 
     @Override
     public void onScriptItemLongClick(int position) {
         new ScriptDialog(ScriptManager.getBeans().get(position), this, ScriptDialog.ACTION_CHANGE).show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recycleAdapter.notifyDataSetChanged();
     }
 
     private boolean isSaved() {
